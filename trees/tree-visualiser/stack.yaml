@@ -1,0 +1,33 @@
+flags: {}
+extra-package-dbs: []
+packages:
+- '.'
+extra-deps:
+- QuickCheck-2.9.2
+- base-compat-0.9.1
+- colour-2.3.3
+- dlist-0.7.1.2
+- exceptions-0.8.3
+- fail-4.9.0.0
+- fgl-5.5.3.1
+- graphviz-2999.19.0.0
+- hashable-1.2.6.1
+- integer-logarithms-1.0.2
+- megaparsec-5.2.0
+- mtl-2.2.1
+- multiset-0.3.3
+- polyparse-1.12
+- primitive-0.6.2.0
+- random-1.1
+- scientific-0.3.5.1
+- semigroups-0.18.3
+- stm-2.4.4.1
+- tagged-0.8.5
+- temporary-1.2.1
+- text-1.2.2.2
+- tf-random-0.5
+- transformers-0.5.4.0
+- transformers-compat-0.5.1.4
+- unordered-containers-0.2.8.0
+- wl-pprint-text-1.1.1.0
+resolver: ghc-7.10.3

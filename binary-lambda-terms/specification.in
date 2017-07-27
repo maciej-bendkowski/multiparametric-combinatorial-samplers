@@ -1,0 +1,8 @@
+-- Lambda terms.
+Lambda = Abs Lambda (2) [0.3]    -- abstractions
+       | App Lambda Lambda (2)   -- applications
+       | Index DeBruijn (0).     -- de Bruijn indices
+
+-- De Bruijn indices.
+DeBruijn = S DeBruijn
+         | Z (2).

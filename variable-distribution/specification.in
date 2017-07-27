@@ -1,0 +1,32 @@
+-- Lambda terms.
+Lambda = Abs Lambda              -- abstractions
+       | App Lambda Lambda       -- applications
+       | Index DeBruijn (0).     -- de Bruijn indices
+
+-- De Bruijn indices.
+DeBruijn = Var0
+         | Var1  (2) [0.04]
+         | Var2  (3) [0.04]
+         | Var3  (4) [0.04]
+         | Var4  (5) [0.04]
+         | Var5  (6) [0.04]
+         | Var6  (7) [0.04]
+         | Var7  (8) [0.04]
+         | Var8  (9) [0.04]
+         | Var9  (10) [0.04]
+         | Var10 (11) [0.04]
+         | Var11 (12) [0.04]
+         | Var12 (13) [0.04]
+         | Var13 (14) [0.04]
+         | Var14 (15) [0.04]
+         | Var15 (16) [0.04]
+         | Var16 (17) [0.04]
+         | Var17 (18) [0.04]
+         | Var18 (19) [0.04]
+         | Var19 (20) [0.04]
+         | Var20 (21) [0.04]
+         | IndexR DeBruijnR (0).
+
+-- Higher-order de Bruijn indices.
+DeBruijnR = S DeBruijnR
+          | Z (22).

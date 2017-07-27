@@ -1,0 +1,13 @@
+resolver: ghc-7.10.3
+flags: {}
+extra-package-dbs: []
+packages:
+- '.'
+extra-deps:
+- MonadRandom-0.5.1
+- fail-4.9.0.0
+- mtl-2.2.1
+- primitive-0.6.2.0
+- random-1.1
+- transformers-0.5.4.0
+- transformers-compat-0.5.1.4

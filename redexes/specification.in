@@ -1,0 +1,13 @@
+-- Lambda terms.
+L = Abs L         -- abstractions
+  | App A (0)     -- applications
+  | Index DB (0). -- de Bruijn indices
+
+-- De Bruijn indices.
+DB = S DB
+   | Z.
+
+-- Applications.
+A = AppA A L        -- applications on the left-hand side.
+  | AppIndex DB L   -- de Bruijn indices on the left-hand side.
+  | Redex L L (2) [0.3].  -- redex applications.
