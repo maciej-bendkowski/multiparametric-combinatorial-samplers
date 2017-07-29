@@ -61,8 +61,6 @@ if args.mode == 'compile':
     pipe(['paganini','-i','paganini.pg','-p','1.0e-20','-s','SCS', '-t', 'rational'],'bb.param')
 
     progress(tasks,"Sampler generation...")
-    if not os.path.isdir("blt/src"):
-        os.mkdir('blt/src')
     pipe(['bb','--force','--with-io','-m','Sampler','-t','bb.param','output.txt'],'tiling-generator/src/Sampler.hs')
 
     progress(tasks,"Generating string representation functions...")

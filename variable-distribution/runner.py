@@ -51,8 +51,6 @@ if args.mode == 'compile':
     pipe(['paganini','-i', 'paganini.pg','-p','1.0e-20'],'bb.param')
 
     progress(tasks,"Sampler generation...")
-    if not os.path.isdir("blt/src"):
-        os.mkdir('blt/src')
     pipe(['bb','--force','--with-io','-m','Sampler','-t','bb.param','specification.in'],'lambda-visualizer/src/Sampler.hs')
 
     os.chdir('lambda-visualizer/')
