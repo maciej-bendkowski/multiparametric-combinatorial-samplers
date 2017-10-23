@@ -51,6 +51,12 @@ with open('input.deg', 'r') as f:
 idx = 0
 n = len(deg_map.keys())
 with open('output.txt', 'w+') as f:
+
+    # Write bb generator parameters
+    f.write('@module     Sampler\n')
+    f.write('@withIO     y\n')
+    f.write('@withShow   n\n')
+
     f.write("Tree = ")
     for deg, freq in deg_map.iteritems():
         if idx == 0:

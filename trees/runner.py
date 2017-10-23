@@ -54,16 +54,19 @@ if args.mode == 'compile':
     pipe(['python2','trees.py'])
 
     progress(tasks,"Generating paganini specification...")
-    pipe(['bb','--force','-g','output.txt'],'paganini.pg')
+    pipe(['bb','--force','-s','output.txt'],'paganini.pg')
 
     progress(tasks,"Calculating tuning parameters...")
-    pipe(['paganini','-i','paganini.pg','-p','1.0e-20','-t', 'ECOS'],'bb.param')
+    pipe(['paganini','-i','paganini.pg','-p','1.0e-20'],'bb.param')
 
     progress(tasks,"Sampler generation...")
-    pipe(['bb','--force','--with-io','-m','Sampler','-t','bb.param','output.txt'],'tree-generator/src/Sampler.hs')
+    pipe(['bb','--force','-p','bb.param','output.txt'],'tree-generator/src/Sampler.hs')
 
-    progress(tasks,"Generating strong representation functions...")
-    pipe(['python2','smyt.py','output.txt'],'tree-generator/src/Sampler.hs','a')
+    progress(tasks,"Drop bb generator parameters from output.txt...")
+    pipe(['tail','-n','+4','output.txt'],'output_drop.txt')
+
+    progress(tasks,"Generating string representation functions...")
+    pipe(['python2','smyt.py','output_drop.txt'],'tree-generator/src/Sampler.hs','a')
 
     os.chdir('tree-generator/')
     progress(tasks,"Compilation... May take some time...")
@@ -93,6 +96,7 @@ if args.mode == "clean":
     pipe(['rm','bb.param'])
     pipe(['rm','paganini.pg'])
     pipe(['rm','output.txt'])
+    pipe(['rm','output_drop.txt'])
     pipe(['rm','tree.dot'])
     pipe(['rm','tree.in'])
     pipe(['rm','tree.eps'])

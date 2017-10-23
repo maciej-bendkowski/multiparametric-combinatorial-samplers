@@ -30,4 +30,4 @@ extra-deps:
 - transformers-compat-0.5.1.4
 - unordered-containers-0.2.8.0
 - wl-pprint-text-1.1.1.0
-resolver: ghc-7.10.3
+resolver: lts-9.1
