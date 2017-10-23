@@ -69,3 +69,13 @@ of plain lambda terms, in the so-called de Bruijn notation, with an explicit con
 over the number of redexes. The ```specification.in``` defines directly the 
 ```Boltzmann Brain``` input specification. Note that the runner script does not support 
 visualisation capabilities.
+
+
+#### Citing Boltzmann Brain
+If you use `Boltzmann Brain` or `Paganini` for published work, 
+we encourage you to cite the accompanying paper: 
+
+Maciej Bendkowski, Olivier Bodini, Sergey Dovgal
+
+[Polynomial tuning of multiparametric combinatorial
+samplers](https://arxiv.org/abs/1708.01212).
