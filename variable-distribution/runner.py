@@ -45,13 +45,13 @@ if args.mode == 'compile':
 
     tasks = 5
     progress(tasks,"Generating paganini specification...")
-    pipe(['bb','--force','-g','specification.in'],'paganini.pg')
+    pipe(['bb','--force','-s','specification.in'],'paganini.pg')
 
     progress(tasks,"Calculating tuning parameters...")
-    pipe(['paganini','-i', 'paganini.pg','-p','1.0e-20'],'bb.param')
+    pipe(['paganini','-i','paganini.pg','-p','1.0e-20'],'bb.param')
 
     progress(tasks,"Sampler generation...")
-    pipe(['bb','--force','--with-io','-m','Sampler','-t','bb.param','specification.in'],'lambda-visualizer/src/Sampler.hs')
+    pipe(['bb','--force','-p','bb.param','specification.in'],'lambda-visualizer/src/Sampler.hs')
 
     os.chdir('lambda-visualizer/')
     progress(tasks,"Compilation... May take some time...")
