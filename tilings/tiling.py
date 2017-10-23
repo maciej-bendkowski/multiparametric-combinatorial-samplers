@@ -32,7 +32,7 @@ def display_tile(tile, file=None):
         else:
             f.write('\n')
     #print ''
-    
+
 def create_empty_tile(height, width):
     return [[0]*width for _ in range(height)]
 
@@ -64,12 +64,12 @@ with open('input.tile', 'r') as f:
         tiles += [current_tile]
         tiles_areas += [current_area]
     # max_height += 1
-        
+
 if flag_debug:
     print tiles
     map(display_tile, tiles)
     print "Max Height =", max_height
-    
+
 def compute_lower_height_profile(tile):
     width = len(tile[0])
     height = len(tile)
@@ -100,12 +100,12 @@ if flag_debug:
 
 if flag_debug:
     print compute_lower_height_profile(tiles[-1])
-    
+
 if flag_debug:
-    print compute_higher_height_profile(tiles[-1])    
-    
+    print compute_higher_height_profile(tiles[-1])
+
 # another technical definition
-     
+
 def display_profile(profile, file = None):
     result = create_empty_tile(max_height, total_width)
     width = len(profile)
@@ -113,12 +113,12 @@ def display_profile(profile, file = None):
         for h in xrange(profile[idx]):
             result[max_height - h - 1][idx] = 1
     display_tile(result, file = file)
-    
+
 def prune_profile(profile):
     min_index = min(profile)
     for idx in xrange(len(profile)):
         profile[idx] -= min_index
-        
+
 def if_fits_give_profile(small_tile, large_tile_profile, pos):
     """
     Small tile in standard
@@ -134,7 +134,7 @@ def if_fits_give_profile(small_tile, large_tile_profile, pos):
     ..*..
     .**.*
     'pos' is the index of horizontal position from 0 to W-1.
-    
+
     [*] returns None if the tile doesn't fit
     [*] returns new profile if the tile fits
     """
@@ -146,23 +146,23 @@ def if_fits_give_profile(small_tile, large_tile_profile, pos):
         return None
 
     new_profile = list(large_tile_profile)
-    
+
     lower_tile_profile = compute_lower_height_profile(small_tile)
     higher_tile_profile = compute_higher_height_profile(small_tile)
-    
+
     for idx in range(small_width):
         if lower_tile_profile[0] - lower_tile_profile[idx]\
             != large_tile_profile[pos] - large_tile_profile[pos + idx]:
                 return None
-    
+
     for idx in range(small_width):
         new_profile[idx + pos] += higher_tile_profile[idx] - lower_tile_profile[idx]
-    
+
     prune_profile(new_profile)
-    
+
     if max(new_profile) > max_height:
         return None
-    
+
     return new_profile
 
 if flag_debug:
@@ -172,7 +172,7 @@ if flag_debug:
     display_profile(if_fits_give_profile(tiles[-1], test_profile, 1))
     print "Resulting profile:"
     print if_fits_give_profile(tiles[-1], test_profile, 1)
-    
+
 base = max_height + 1
 
 def convert_array_to_base_representation(array):
@@ -181,7 +181,7 @@ def convert_array_to_base_representation(array):
     for idx in xrange(array_length):
         base_repr += array[idx] * base**idx
     return base_repr
-    
+
 def convert_base_representation_to_array(base_repr):
     result = [0] * total_width
     idx = 0
@@ -204,7 +204,7 @@ if flag_debug:
     print test_profile
     print convert_base_representation_to_array(\
           convert_array_to_base_representation(test_profile))
-    
+
 #
 ## Construct the (transposed) array of dependencies
 
@@ -230,8 +230,8 @@ for profile_repr in xrange(0, index_size):
     """
 
 if flag_progress:
-    print 'Eliminating unused transitions...'       
-        
+    print 'Eliminating unused transitions...'
+
 for profile_repr in xrange(0, index_size):
     profile = convert_base_representation_to_array(profile_repr)
     for tile_idx in xrange(number_of_tiles):
@@ -242,7 +242,7 @@ for profile_repr in xrange(0, index_size):
             to_profile_repr = convert_array_to_base_representation(to_profile)
             # assert dependency_array[to_profile_repr][profile_repr] == None
             dependency_array[to_profile_repr][profile_repr] = (tile_idx, pos)
-            
+
     # display_profile(profile)
     # print "==========="
 
@@ -261,8 +261,8 @@ if flag_debug:
     print list_include_rows
 
 if flag_progress:
-    print 'done!'    
-   
+    print 'done!'
+
 global_counter = 0
 
 """
@@ -294,11 +294,11 @@ with open('output.txt', 'w+') as f:
             if first_object_in_grammar:
                 first_object_in_grammar = False
             else:
-                f.write(' | ')            
+                f.write(' | ')
             (tile_idx, pos) = dependency_array[profile_ind][to_profile_ind]
             f.write('Tile' + str(tile_idx) + ' ')
             f.write('Tiling' + str(to_profile_ind) + ' ')
-            f.write('Pos' + str(pos) + ' (0)')            
+            f.write('Pos' + str(pos) + ' (0)')
         f.write('.\n')
     f.close()
 """
@@ -317,6 +317,10 @@ with open('output.txt', 'w+') as f:
         display_tile(create_empty_tile(max_height, total_width), f)
         f.write('[*] Number of variables = ' + str(number_of_tiles) + '\n')
         f.write('[*] Number of functions = ' + str(sum(list_include_rows)) + ' -}\n')
+    # Write bb generator parameters
+    f.write('@module     Sampler\n')
+    f.write('@withIO     y\n')
+    f.write('@withShow   n\n')
     for profile_ind in xrange(index_size):
         if not list_include_rows[profile_ind]:
             continue
@@ -334,7 +338,7 @@ with open('output.txt', 'w+') as f:
             if first_object_in_grammar:
                 first_object_in_grammar = False
             else:
-                f.write('\n | ')            
+                f.write('\n | ')
             (tile_idx, pos) = dependency_array[profile_ind][to_profile_ind]
             f.write('Pos' + str(pos) + '_x' + str(global_counter) + 'x ')
             global_counter += 1
@@ -354,7 +358,7 @@ with open('output.txt', 'w+') as f:
             if not list_include_rows[tiling_idx]:
                 continue
             f.write('Tiling' + str(tiling_idx) + '\n')
-            display_profile(convert_base_representation_to_array(tiling_idx), f)    
+            display_profile(convert_base_representation_to_array(tiling_idx), f)
         f.write(' -}\n')
 
     f.close()

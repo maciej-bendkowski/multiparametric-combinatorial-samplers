@@ -55,16 +55,19 @@ if args.mode == 'compile':
     pipe(['python2','tiling.py'])
 
     progress(tasks,"Generating paganini specification...")
-    pipe(['bb','--force','-g','output.txt'],'paganini.pg')
+    pipe(['bb','--force','-s','output.txt'],'paganini.pg')
 
     progress(tasks,"Calculating tuning parameters...")
     pipe(['paganini','-i','paganini.pg','-p','1.0e-20','-s','SCS', '-t', 'rational'],'bb.param')
 
     progress(tasks,"Sampler generation...")
-    pipe(['bb','--force','--with-io','-m','Sampler','-t','bb.param','output.txt'],'tiling-generator/src/Sampler.hs')
+    pipe(['bb','--force','-p','bb.param','output.txt'],'tiling-generator/src/Sampler.hs')
+
+    progress(tasks,"Drop bb generator parameters from output.txt...")
+    pipe(['tail','-n','+4','output.txt'],'output_drop.txt')
 
     progress(tasks,"Generating string representation functions...")
-    pipe(['python2','smyt.py','output.txt'],'tiling-generator/src/Sampler.hs','a')
+    pipe(['python2','smyt.py','output_drop.txt'],'tiling-generator/src/Sampler.hs','a')
 
     os.chdir('tiling-generator/')
     progress(tasks,"Compilation... May take some time...")
@@ -99,6 +102,7 @@ if args.mode == "clean":
     pipe(['rm','bb.param'])
     pipe(['rm','paganini.pg'])
     pipe(['rm','output.txt'])
+    pipe(['rm','output_drop.txt'])
     pipe(['rm','tiling.viz'])
     pipe(['rm','tiling_clean.viz'])
     pipe(['rm','final_tiling.viz'])
