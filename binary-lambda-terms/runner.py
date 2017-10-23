@@ -45,7 +45,7 @@ if args.mode == 'compile':
 
     tasks = 5
     progress(tasks,"Generating paganini specification...")
-    pipe(['bb','--force','-g','specification.in'],'paganini.pg')
+    pipe(['bb','--force','-s','specification.in'],'paganini.pg')
 
     progress(tasks,"Calculating tuning parameters...")
     pipe(['paganini','-i','paganini.pg','-p','1.0e-9'],'bb.param')
@@ -53,7 +53,7 @@ if args.mode == 'compile':
     progress(tasks,"Sampler generation...")
     if not os.path.isdir("blt/src"):
         os.mkdir('blt/src')
-    pipe(['bb','--force','--with-io','-m','Sampler','-t','bb.param','specification.in'],'blt/src/Sampler.hs')
+    pipe(['bb','--force','-p','bb.param','specification.in'],'blt/src/Sampler.hs')
 
     os.chdir('blt/')
     progress(tasks,"Compilation... May take some time...")
