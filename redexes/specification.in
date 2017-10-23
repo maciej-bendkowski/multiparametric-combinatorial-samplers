@@ -1,3 +1,7 @@
+-- generator parameters
+@module    Sampler
+@withIO    y
+
 -- Lambda terms.
 L = Abs L         -- abstractions
   | App A (0)     -- applications
