@@ -50,7 +50,7 @@ If you have only Python2 installed, you can also try
 Good luck!
 """)
     sys.exit(1)
-    
+
 # --- technical inclusions
 from numpy import log, exp
 np.set_printoptions(precision=14)
@@ -100,7 +100,7 @@ def basis_vector(idx, dim):
     result = [0] * dim
     result[idx-1] = 1
     return result
-    
+
 #
 ##
 ### MAIN CODE
@@ -168,11 +168,11 @@ sys.stdout = old_stdout
 
 if flag_debug:
     np.set_printoptions(precision = 7)
-    
+
 s = np.array([
     [
         exp((subs_idx+1) * u_j.value) / (1. - exp((subs_idx+1) * u_j.value))
-        for u_j in u        
+        for u_j in u
     ]
     for subs_idx in range(n_substitutions)
 ])
@@ -193,7 +193,7 @@ for subs_idx in range(n_substitutions):
                     sums[subs_idx][n_iter][idx] * \
                     s[subs_idx][idx - n_iter - 1] ** (subs_idx + 1)
 
-# branching probabilities correspond to which symmetric polynomial to choose                    
+# branching probabilities correspond to which symmetric polynomial to choose
 branching_probabilities = np.array([
     np.sum(part, axis = 1) / np.sum(part)
     for part in parts
@@ -209,7 +209,7 @@ def random_weighted_choice(weights):
 
 ##
 ## Sample one row of Young tableau using Boltzmann
-## Gamma A(z^k) 
+## Gamma A(z^k)
 ##
 
 elements = range(n_colors)
@@ -225,7 +225,7 @@ def sample_from_nth_substitution(subs_idx):
         [0        0             0       0                     s1...s5 ]
     ]
     The sum of each row is symmetric polynomial.
-    
+
     I.    Sample how many colors we will have
     II.   Start from the row number equal to number of colors sampled at step I.
               Sample the index of the first color.
@@ -246,12 +246,12 @@ def sample_from_nth_substitution(subs_idx):
         nth_idx = random_weighted_choice(parts[subs_idx][row][left:])
         color_indices[idx] = left - row + nth_idx
         assert color_indices[idx] >= 0
-        assert color_indices[idx] < n_colors        
-        left += nth_idx        
-    
+        assert color_indices[idx] < n_colors
+        left += nth_idx
+
     # color_indices contains the indices of colors
     # sample geometric r.v. for each color index
-        
+
     result = [0] * n_colors
 
     for idx in range(sample_colors+1):
@@ -278,7 +278,7 @@ def get_number_of_rows():
 
     # Artificially truncate because I don't want 0 rows
     partial_sums[0] = 0.
-    
+
     elements = range(n_substitutions)
     probabilities = np.zeros(n_substitutions)
     for idx in range(n_substitutions):
@@ -354,7 +354,7 @@ width = sum(tableau[-1])
 n_placements = np.sum(tableau)
 
 placements = []
-                
+
 sys.stdout.write(str(n_colors) + ' ' + str(width) + '\n')
 for idx in range(n_colors):
     sys.stdout.write('1 1\n')
